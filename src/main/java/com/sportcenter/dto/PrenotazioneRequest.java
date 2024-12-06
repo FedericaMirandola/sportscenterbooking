@@ -7,7 +7,7 @@ public class PrenotazioneRequest {
     private LocalDateTime dataOra;
     private String stato;
     private Long utenteId;
-    private Long campoSportivoId;
+    private Long camposportivoId;
 
     public LocalDateTime getDataOra() {
         return dataOra;
@@ -33,12 +33,12 @@ public class PrenotazioneRequest {
         this.utenteId = utenteId;
     }
 
-    public Long getCampoSportivoId() {
-        return campoSportivoId;
+    public Long getCamposportivoId() {
+        return camposportivoId;
     }
 
-    public void setCampoSportivoId(Long campoSportivoId) {
-        this.campoSportivoId = campoSportivoId;
+    public void setCamposportivoId(Long camposportivoId) {
+        this.camposportivoId = camposportivoId;
     }
     
 }

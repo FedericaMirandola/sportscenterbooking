@@ -13,14 +13,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sportcenter.dto.PrenotazioneRequest;
+import com.sportcenter.dto.PrenotazioneResponse;
+import com.sportcenter.model.CampoSportivo;
 import com.sportcenter.model.Prenotazione;
+import com.sportcenter.model.Utente;
 import com.sportcenter.repository.PrenotazioneRepository;
+import com.sportcenter.service.PrenotazioneService;
 
 @RequestMapping("/api/prenotazioni")
 @RestController
 public class PrenotazioneController {
-     @Autowired
+    @Autowired
     private PrenotazioneRepository prenotazioneRepository;
+
+    @Autowired
+    private PrenotazioneService prenotazioneService;
 
     @GetMapping
     public List<Prenotazione> getAllPrenotazioni() {
@@ -32,22 +39,32 @@ public class PrenotazioneController {
         return prenotazioneRepository.findById(id).get();
     }
 
-    @PostMapping("/{prenotazioneId}/campi")
-    public Prenotazione createPrenotazione(@RequestBody PrenotazioneRequest prenotazioneRequest){
-       
-    //public ResponseEntity<Playlist> addCanzoneToPlaylist(@PathVariable Long playlistId, {
-        //Playlist updatedPlaylist = playlistService.addCanzoneToPlaylist(playlistId, request.getCanzoneId());
+    @PostMapping
+    public PrenotazioneResponse create(@RequestBody PrenotazioneRequest prenotazioneRequest) {
 
+        Prenotazione prenotazione = prenotazioneService.create(prenotazioneRequest);
 
-
-        return prenotazioneService.create(prenotazioneRequest);
+        PrenotazioneResponse response = mapToResponse(prenotazione);
+        return response;
     }
 
-     @DeleteMapping("/{id}")
-    public void deletePrenotazione(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public void deletePrenotazione(@PathVariable Long id) {
         prenotazioneRepository.deleteById(id);
     }
 
-  
-    
+    private PrenotazioneResponse mapToResponse(Prenotazione prenotazione) {
+
+        PrenotazioneResponse response = new PrenotazioneResponse();
+
+        response.setId(prenotazione.getId());
+        response.setStato(prenotazione.getStato());
+        response.setCamposportivoId(prenotazione.getCamposportivo().getId());
+        response.setUtenteId(prenotazione.getUtente().getId());
+        response.setDataOra(prenotazione.getDataOra());
+
+        return response;
+
+    }
+
 }

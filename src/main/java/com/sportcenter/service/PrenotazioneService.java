@@ -13,29 +13,27 @@ import com.sportcenter.repository.UtenteRepository;
 
 @Service
 public class PrenotazioneService {
-@Autowired
-private CampoSportivoRepository campoSportivoRepository;
-@Autowired
-private UtenteRepository utenteRepository;
-@Autowired
-private PrenotazioneRepository prenotazioneRepository;
+  @Autowired
+  private CampoSportivoRepository campoSportivoRepository;
+  @Autowired
+  private UtenteRepository utenteRepository;
+  @Autowired
+  private PrenotazioneRepository prenotazioneRepository;
 
-    public Prenotazione create(PrenotazioneRequest request) {
-        
-                Utente utente = utenteRepository.findById(request.getUtenteId())
-                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+  public Prenotazione create(PrenotazioneRequest request) {
 
-       
-                CampoSportivo campoSportivo = campoSportivoRepository.findById(request.getCampoSportivoId())
-                .orElseThrow(() -> new RuntimeException("campo sportivo non trovato"));
-                
-       
-                Prenotazione prenotazione = prenotazioneRepository.findByStato(request.getStato())//>OOOOO< cazzo uffa
-                .orElseThrow(() -> new RuntimeException("indefinibile"));
+    Utente utente = utenteRepository.findById(request.getUtenteId()).get();
+    CampoSportivo camposportivo = campoSportivoRepository.findById(request.getCamposportivoId()).get();
+    Prenotazione prenotazioneToSave = new Prenotazione();
 
-                  return prenotazioneRepository.save(prenotazione);
+    prenotazioneToSave.setDataOra(request.getDataOra());
+    prenotazioneToSave.setStato(request.getStato());
+    prenotazioneToSave.setUtente(utente);
+    prenotazioneToSave.setCamposportivo(camposportivo);
 
+    prenotazioneToSave = prenotazioneRepository.save(prenotazioneToSave);
 
+    return prenotazioneToSave;
 
-    }
+  }
 }
