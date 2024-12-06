@@ -1,6 +1,7 @@
 
 package com.sportcenter.model;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +27,8 @@ public class Utente {
 
     private String password;
 
+    
+
     @OneToMany(mappedBy = "utente")
     private List<Prenotazione> prenotazioni;
 
@@ -35,7 +38,7 @@ public class Utente {
         joinColumns = @JoinColumn(name = "user_id"), // Colonna di join per User
         inverseJoinColumns = @JoinColumn(name = "role_id") // Colonna di join per Role
     )
-    private Set<Ruolo> ruoli;
+    private Set<Ruolo> ruoli = new HashSet<>();
 
     // Getter e Setter
     public Long getId() {
@@ -85,6 +88,9 @@ public class Utente {
     public void setPrenotazioni(List<Prenotazione> prenotazioni) {
         this.prenotazioni = prenotazioni;
     }
+
+    
+    
 
     
 
