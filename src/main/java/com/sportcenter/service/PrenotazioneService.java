@@ -23,7 +23,7 @@ public class PrenotazioneService {
   public Prenotazione create(PrenotazioneRequest request) {
 
     Utente utente = utenteRepository.findById(request.getUtenteId()).get();
-    CampoSportivo camposportivo = campoSportivoRepository.findById(request.getCamposportivoId()).get();
+    CampoSportivo camposportivo = campoSportivoRepository.findById(request.getCampoSportivoId()).get();
     Prenotazione prenotazioneToSave = new Prenotazione();
 
     prenotazioneToSave.setDataOra(request.getDataOra());

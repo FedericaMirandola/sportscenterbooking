@@ -21,7 +21,7 @@ public class RuoloControlle {
      @Autowired
     private RuoloRepository ruoloRepository;
 
-    @GetMapping
+   @GetMapping
     public List<Ruolo> getAllRuolo() {
         return ruoloRepository.findAll();
     }
